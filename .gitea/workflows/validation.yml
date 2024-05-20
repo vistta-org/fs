@@ -5,7 +5,7 @@ on:
     branches:    
       - master
 env:
-  module: console
+  module: fs
 jobs:
   Validation:
     runs-on: ubuntu-latest
