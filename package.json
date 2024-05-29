@@ -1,7 +1,7 @@
 {
   "name": "@vistta/fs",
   "version": "0.0.0",
-  "description": "Vistta Filesystem Wrapper",
+  "description": "Vistta Filesystem Library",
   "main": "index.js",
   "types": "index.d.ts",
   "type": "module",
@@ -17,8 +17,5 @@
   "files": [
     "LICENSE",
     "tsconfig.json"
-  ],
-  "dependencies": {
-    "@types/node": "^20.12.10"
-  }
+  ]
 }
