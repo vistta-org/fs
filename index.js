@@ -1,3 +1,4 @@
+
 /**
  * Provides a set of functions for interacting with the file system.
  */
@@ -141,6 +142,25 @@ if (typeof process !== "undefined") {
    * @returns {void}
    */
   fs.cpSync = (source, destination, options) => nodeFs?.cpSync(source, destination, options);
+
+  /**
+   * Creates a readable stream for a file.
+   * 
+   * @param {string | Buffer | URL} path - The path to the file.
+   * @param {Object} [options] - Options for the stream.
+   * @returns {any} A readable stream for the file.
+   */
+  fs.createReadStream = (path, options) => nodeFs?.createReadStream(path, options);
+
+  /**
+   * Creates a writable stream for a file.
+   * 
+   * @param {string | Buffer | URL} path - The path to the file.
+   * @param {Object} [options] - Options for the stream.
+   * @returns {any} A writable stream for the file.
+   */
+  fs.createWriteStream = (path, options) => nodeFs?.createWriteStream(path, options);
+
 
   /**
    * Provides constants used in the file system module.
@@ -775,3 +795,4 @@ if (typeof process !== "undefined") {
 }
 
 export default fs;
+export { fs };

@@ -1,4 +1,4 @@
-# **Vistta Filesystem Library**
+# **VISTTA Filesystem Library**
 
 This library provides small life improvements converging fs, path and url functions into one browser compatible package.
 
