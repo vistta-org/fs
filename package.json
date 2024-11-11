@@ -12,9 +12,5 @@
     "postinstall": ""
   },
   "author": "Tiago Terenas Almeida",
-  "license": "CC BY-NC-ND 4.0 DEED",
-  "files": [
-    "LICENSE",
-    "tsconfig.json"
-  ]
+  "license": "CC BY-NC-ND 4.0 DEED"
 }
