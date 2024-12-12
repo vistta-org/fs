@@ -134,6 +134,16 @@ if (typeof process !== "undefined") {
   fs.cp = (source, destination, options) => nodeFs?.promises?.cp(source, destination, options);
 
   /**
+   * Copies a file or directory.
+   * 
+   * @param {string | URL} source - The path to the source file or directory.
+   * @param {string | URL} destination - The path to the destination file or directory.
+   * @param {Object} [options] - Options for the operation.
+   * @returns {Promise<void>}
+   */
+  fs.copy = (source, destination, options) => nodeFs?.promises?.cp(source, destination, options);
+
+  /**
    * Copies a file or directory synchronously.
    * 
    * @param {string | URL} source - The path to the source file or directory.
@@ -142,6 +152,16 @@ if (typeof process !== "undefined") {
    * @returns {void}
    */
   fs.cpSync = (source, destination, options) => nodeFs?.cpSync(source, destination, options);
+
+  /**
+   * Copies a file or directory synchronously.
+   * 
+   * @param {string | URL} source - The path to the source file or directory.
+   * @param {string | URL} destination - The path to the destination file or directory.
+   * @param {Object} [options] - Options for the operation.
+   * @returns {void}
+   */
+  fs.copySync = (source, destination, options) => nodeFs?.cpSync(source, destination, options);
 
   /**
    * Creates a readable stream for a file.
@@ -377,6 +397,45 @@ if (typeof process !== "undefined") {
   fs.mkdtempSync = (prefix, options) => nodeFs?.mkdtempSync(prefix, options);
 
   /**
+   * Moves a file or directory to a new location.
+   * 
+   * @param {string | URL} source - The source path.
+   * @param {string | URL} destination - The destination path.
+   * @returns {Promise<void>}
+   */
+  fs.move = async(source, destination) => {
+    try {
+        await nodeFs?.promises?.rename(source, destination);
+    } catch (err) {
+        if (err.code === 'EXDEV') {
+            await nodeFs?.promises?.cp(source, destination, { recursive: true });
+            await nodeFs?.promises?.rm(source, { recursive: true, force: true });
+        } else {
+            throw err;
+        }
+    }
+  }
+
+  /**
+   * Synchronously moves a file or directory to a new location.
+   * 
+   * @param {string | URL} source - The source path.
+   * @param {string | URL} destination - The destination path.
+   */
+  fs.moveSync = (source, destination) => {
+    try {
+        nodeFs?.renameSync(source, destination);
+    } catch (err) {
+        if (err.code === 'EXDEV') {
+            nodeFs?.cpSync(source, destination, { recursive: true });
+            nodeFs?.rmSync(source, { recursive: true, force: true });
+        } else {
+            throw err;
+        }
+    }
+  }
+
+  /**
    * Opens a file.
    * 
    * @param {string | Buffer | URL} path - The path to the file.
@@ -571,6 +630,15 @@ if (typeof process !== "undefined") {
   fs.rm = (path, options) => nodeFs?.promises?.rm(path, options);
 
   /**
+   * Removes a file or directory.
+   *
+   * @param {string | Buffer | URL} path - Path to the file or directory.
+   * @param {Object} [options] - Options for the operation.
+   * @returns {Promise<void>} Promise that resolves when the file or directory is removed.
+   */
+  fs.remove = (path, options) => nodeFs?.promises?.rm(path, options);
+
+  /**
    * Removes a file or directory synchronously.
    *
    * @param {string | Buffer | URL} path - Path to the file or directory.
@@ -578,6 +646,15 @@ if (typeof process !== "undefined") {
    * @returns {void}
    */
   fs.rmSync = (path, options) => nodeFs?.rmSync(path, options);
+
+  /**
+   * Removes a file or directory synchronously.
+   *
+   * @param {string | Buffer | URL} path - Path to the file or directory.
+   * @param {Object} [options] - Options for the operation.
+   * @returns {void}
+   */
+  fs.removeSync = (path, options) => nodeFs?.rmSync(path, options);
 
   /**
    * Gets the file status of a file.
@@ -753,7 +830,6 @@ if (typeof process !== "undefined") {
     const { dev, ino } = fs.statSync(path);
     return `${ino.toString(16)}${dev.toString(16)}`;
   };
-
 
   /**
    * Watches a directory for changes.
