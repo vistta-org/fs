@@ -375,6 +375,23 @@ fs.mkdtemp(prefix, options);
 fs.mkdtempSync(prefix, options);
 
 /**
+ * Moves a file or directory to a new location.
+ * 
+ * @param {string | URL} source - The source path.
+ * @param {string | URL} destination - The destination path.
+ * @returns {Promise<void>}
+ */
+fs.move(source, destination):
+
+/**
+ * Synchronously moves a file or directory to a new location.
+ * 
+ * @param {string | URL} source - The source path.
+ * @param {string | URL} destination - The destination path.
+ */
+fs.moveSync(source, destination):
+
+/**
  * Opens a file.
  *
  * @param {string | Buffer | URL} path - The path to the file.
