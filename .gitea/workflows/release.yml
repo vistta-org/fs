@@ -23,8 +23,6 @@ jobs:
       - 
         name: Checkout
         uses: tiagomta/checkout@v1
-        with:
-          ref: development
       - 
         name: NPM Release
         id: npm
