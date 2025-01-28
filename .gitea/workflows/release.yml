@@ -18,17 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:latest
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/development'
     steps:
       - 
         name: Checkout
         uses: tiagomta/checkout@v1
         with:
           repository: vistta/vistta
-          ref: master
+          ref: refs/heads/development
           token: ${{ secrets.GIT_TOKEN }}
           fetch-depth: 0
           submodules: true
-      - 
-        run: git push origin master:development
       - 
         run: echo ${{ inputs.type }}
