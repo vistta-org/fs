@@ -18,32 +18,28 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:latest
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/development'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master'
     steps:
       - 
         name: Checkout
         uses: tiagomta/checkout@v1
         with:
-          repository: vistta/vistta
-          ref: ${{ github.ref }}
-          token: ${{ secrets.GIT_TOKEN }}
-          fetch-depth: 0
-          submodules: true
+          ref: development
       - 
-        name: ${{ inputs.type }} Release
+        name: NPM Release
         id: npm
         uses: tiagomta/npm@v1
         with:
           command: version ${{ inputs.type }} --email devops@vistta.org
           working-directory: ./packages/${{ env.module }}
       - 
-        name: Create ${{ inputs.type }} Milestone
+        name: Create Milestone
         id: milestone
         uses: tiagomta/gitea@v1
         with:
           command: milestone create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})"
       - 
-        name: Create PR (${{ inputs.type }})
+        name: Create PR
         uses: tiagomta/gitea@v1
         with:
-          command: pr create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})" master development --milestone ${{ steps.milestone.outputs.result }} --labels "Project/Release ${{ inputs.type }}"
+          command: pr create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})" ${{ github.ref }} development --milestone ${{ steps.milestone.outputs.result }} --labels "Project/Release ${{ inputs.type }}"
