@@ -13,6 +13,7 @@ on:
 
 env:
   module: fs
+  ref: refs/heads/development
 jobs:
   Release:
     runs-on: ubuntu-latest
@@ -23,6 +24,12 @@ jobs:
       - 
         name: Checkout
         uses: tiagomta/checkout@v1
+        with:
+          repository: vistta/vistta
+          ref: ${{ env.ref }}
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 0
+          submodules: true
       - 
         name: NPM Release
         id: npm
@@ -40,4 +47,4 @@ jobs:
         name: Create PR
         uses: tiagomta/gitea@v1
         with:
-          command: pr create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})" ${{ github.ref }} development --milestone ${{ steps.milestone.outputs.result }} --labels "Project/Release ${{ inputs.type }}"
+          command: pr create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})" ${{ github.ref }} ${{ env.ref }} --milestone ${{ steps.milestone.outputs.result }} --labels "Project/Release ${{ inputs.type }}"
