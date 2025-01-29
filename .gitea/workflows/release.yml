@@ -26,9 +26,24 @@ jobs:
         uses: tiagomta/checkout@v1
         with:
           ref: ${{ env.ref }}
-          token: ${{ secrets.GIT_TOKEN }}
+          token: ${{ secrets.TOKEN }}
+      - 
+        name: NPM Release
+        id: npm
+        uses: tiagomta/npm@v1
+        with:
+          command: version ${{ inputs.type }} --email devops@vistta.org
+          token: ${{ secrets.TOKEN }}
+      - 
+        name: Create Milestone
+        id: milestone
+        uses: tiagomta/gitea@v1
+        with:
+          command: milestone create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})"
+          token: ${{ secrets.TOKEN }}
       - 
         name: Create PR
         uses: tiagomta/gitea@v1
         with:
-          command: pr create "${{ inputs.type }}" ${{ github.ref }} ${{ env.ref }} --labels "Project/Release ${{ inputs.type }}"
+          command: pr create "${{ inputs.type }} (v${{ steps.npm.outputs.result }})" ${{ github.ref }} ${{ env.ref }} --milestone ${{ steps.milestone.outputs.result }} --labels "Project/Release ${{ inputs.type }}"
+          token: ${{ secrets.TOKEN }}
