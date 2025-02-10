@@ -1,4 +1,4 @@
-name: Project Release
+name: Release Workflow
 on:
   workflow_dispatch:
     inputs:
@@ -12,7 +12,6 @@ on:
           - Major
 
 env:
-  module: fs
   ref: refs/heads/development
 jobs:
   Release:
