@@ -121,6 +121,15 @@ fs.chownSync(path, uid, gid);
 fs.closeSync(fd);
 
 /**
+ * Checks if a path contains a specific segment.
+ *
+ * @param {string} path - The path to check.
+ * @param {string} segment - The segment to check for.
+ * @returns {boolean} - Returns true if the path contains the segment, false otherwise.
+ */
+fs.contains(path, segment);
+
+/**
  * Copies a file.
  *
  * @param {string | Buffer | URL} source - The path to the source file or directory.
@@ -164,6 +173,15 @@ fs.cpSync(source, destination, options);
  * Provides constants used in the file system module.
  */
 fs.constantsnodeFs?.constants;
+
+
+/**
+ * Ensures that a directory exists, creating it if it doesn't.
+ *
+ * @param {string} path - The path to the directory.
+ * @returns {void}
+ */
+fs.ensureDir(path);
 
 /**
  * Checks if a file or directory exists synchronously.
@@ -376,7 +394,7 @@ fs.mkdtempSync(prefix, options);
 
 /**
  * Moves a file or directory to a new location.
- * 
+ *
  * @param {string | URL} source - The source path.
  * @param {string | URL} destination - The destination path.
  * @returns {Promise<void>}
@@ -385,11 +403,19 @@ fs.move(source, destination):
 
 /**
  * Synchronously moves a file or directory to a new location.
- * 
+ *
  * @param {string | URL} source - The source path.
  * @param {string | URL} destination - The destination path.
  */
 fs.moveSync(source, destination):
+
+/**
+ * Normalizes a path.
+ *
+ * @param {string} path - The path to normalize.
+ * @returns {string}
+ */
+fs.normalize(path);
 
 /**
  * Opens a file.
@@ -686,7 +712,7 @@ fs.utimesSync(path, atime, mtime);
 
 /**
  * Stops watching a file or directory for changes.
- * 
+ *
  * @param {string | Buffer | URL} path - The path to the file or directory.
  * @param {Function} listener - The listener function.
  * @returns {void}
@@ -695,7 +721,7 @@ fs.unwatchFile(path, options, listener);
 
 /**
  * Watches a file or directory for changes.
- * 
+ *
  * @param {string | Buffer | URL} path - The path to the file or directory.
  * @param {Object} [options] - Options for the operation.
  * @param {Function} listener - The listener function.
