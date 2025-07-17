@@ -1,4 +1,4 @@
-import * as fs from './lib/index.js';
+import * as fs from "./lib/index.js";
 
 export default fs;
-export * from './lib/index.js';
+export * from "./lib/index.js";
