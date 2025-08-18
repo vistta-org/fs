@@ -816,7 +816,7 @@ fs.watch(path, options);
 
 ## **License**
 
-Attribution-NonCommercial-NoDerivatives 4.0 International
+Apache 2.0 with Commons Clause
 
 ## **Contributing**
 
