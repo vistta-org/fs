@@ -1,6 +1,6 @@
 {
   "name": "@vistta/fs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vistta Filesystem Library",
   "main": "index.js",
   "type": "module",
