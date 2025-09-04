@@ -6,7 +6,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vis-tta/fs.git"
+    "url": "https://github.com/vistta-org/fs.git"
   },
   "scripts": {
     "postinstall": ""
