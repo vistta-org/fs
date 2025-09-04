@@ -160,6 +160,16 @@ fs.copyFileSync(source, destination, mode);
 fs.cp(source, destination, options);
 
 /**
+ * Copies a file or directory.
+ *
+ * @param {string | URL} source - The path to the source file or directory.
+ * @param {string | URL} destination - The path to the destination file or directory.
+ * @param {Object} [options] - Options for the operation.
+ * @returns {Promise<void>}
+ */
+fs.copy(source, destination, options);
+
+/**
  * Copies a file or directory synchronously.
  *
  * @param {string | URL} source - The path to the source file or directory.
@@ -170,10 +180,37 @@ fs.cp(source, destination, options);
 fs.cpSync(source, destination, options);
 
 /**
+ * Copies a file or directory synchronously.
+ *
+ * @param {string | URL} source - The path to the source file or directory.
+ * @param {string | URL} destination - The path to the destination file or directory.
+ * @param {Object} [options] - Options for the operation.
+ * @returns {void}
+ */
+fs.copySync(source, destination, options);
+
+/**
+ * Creates a readable stream for a file.
+ *
+ * @param {string | Buffer | URL} path - The path to the file.
+ * @param {Object} [options] - Options for the stream.
+ * @returns {any} A readable stream for the file.
+ */
+fs.createReadStream(path, options) ;
+
+/**
+ * Creates a writable stream for a file.
+ *
+ * @param {string | Buffer | URL} path - The path to the file.
+ * @param {Object} [options] - Options for the stream.
+ * @returns {any} A writable stream for the file.
+ */
+fs.createWriteStream(path, options);
+
+/**
  * Provides constants used in the file system module.
  */
 fs.constantsnodeFs?.constants;
-
 
 /**
  * Ensures that a directory exists, creating it if it doesn't.
@@ -182,6 +219,22 @@ fs.constantsnodeFs?.constants;
  * @returns {void}
  */
 fs.ensureDir(path);
+
+/**
+ * Ensures that a directory exists, creating it if it doesn't.
+ *
+ * @param {string} path - The path to the directory.
+ * @returns {void}
+ */
+fs.ensureDirSync(path);
+
+/**
+ * Checks if a file or directory exists asynchronously.
+ *
+ * @param {string | Buffer | URL} path
+ * @returns {Promise<boolean>}
+ */
+fs.exists(path);
 
 /**
  * Checks if a file or directory exists synchronously.
@@ -299,6 +352,14 @@ fs.globSync(pattern, options);
 fs.isAbsolute(path);
 
 /**
+ * Checks if a path is a symbolic link.
+ *
+ * @param {string | Buffer | URL} path
+ * @returns {boolean}
+ */
+fs.isSymlink(path);
+
+/**
  * Changes the ownership of a symbolic link.
  *
  * @param {string | Buffer | URL} path
@@ -391,6 +452,22 @@ fs.mkdtemp(prefix, options);
  * @returns {string}
  */
 fs.mkdtempSync(prefix, options);
+
+/**
+ * Creates a unique temporary file.
+ *
+ * @param {string} prefix - Prefix for the temp file.
+ * @returns {Promise<string>} - Path to the temp file.
+ */
+fs.mktempFile(prefix = "/tmp");
+
+/**
+ * Creates a unique temporary file synchronously.
+ *
+ * @param {string} prefix - Prefix for the temp file.
+ * @returns {string} - Path to the temp file.
+ */
+fs.mktempFileSync(prefix = "/tmp")};
 
 /**
  * Moves a file or directory to a new location.
@@ -612,6 +689,15 @@ fs.rmdirSync(path, options);
 fs.rm(path, options);
 
 /**
+ * Removes a file or directory.
+ *
+ * @param {string | Buffer | URL} path - Path to the file or directory.
+ * @param {Object} [options] - Options for the operation.
+ * @returns {Promise<void>} Promise that resolves when the file or directory is removed.
+ */
+fs.remove(path, options);
+
+/**
  * Removes a file or directory synchronously.
  *
  * @param {string | Buffer | URL} path - Path to the file or directory.
@@ -619,6 +705,23 @@ fs.rm(path, options);
  * @returns {void}
  */
 fs.rmSync(path, options);
+
+/**
+ * Removes a file or directory synchronously.
+ *
+ * @param {string | Buffer | URL} path - Path to the file or directory.
+ * @param {Object} [options] - Options for the operation.
+ * @returns {void}
+ */
+fs.removeSync(path, options);
+
+/**
+ * Resolves the target of a symbolic link.
+ *
+ * @param {string | Buffer | URL} path
+ * @returns {string|null}
+ */
+fs.resolveSymlink(path);
 
 /**
  * Gets the file status of a file.
@@ -795,12 +898,13 @@ fs.isDirectory(path);
 fs.isFile(path);
 
 /**
- * Returns a 32bit unique ID from the filepath provided.
+ * Returns a unique ID from the filepath provided.
  *
  * @param {string | Buffer | URL} path - The path of the file.
- * @returns {string | null} A 32bit unique ID or null if the file does not exist.
+ * @param {number} [length=8] - The length of the ID to return, defaults to 8 characters.
+ * @returns {string | null} A unique ID or null if the file does not exist.
  */
-fs.fileId(path);
+fs.fileId(path, length);
 
 /**
  * Watches a directory for changes.
@@ -812,6 +916,24 @@ fs.fileId(path);
  * @returns {any} An iterator that yields the paths of changed files.
  */
 fs.watch(path, options);
+
+/**
+ * Watches files or directories for changes using native fs.watch.
+ *
+ * @param {string | Buffer | URL} path - The path to watch.
+ * @param {Object|string} [options] - Options or encoding.
+ * @param {Function} [listener] - Callback for change events.
+ * @returns {FSWatcher}
+ */
+fs.watchNative(path, options, listener);
+
+/**
+ * Formats bytes as human-readable string.
+ *
+ * @param {number} bytes
+ * @returns {string}
+ */
+fs.formatSize(bytes);
 ```
 
 ## **License**
