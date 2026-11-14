@@ -96,6 +96,11 @@ Node tests use isolated OS temporary directories. Browser tests exercise real
 OPFS storage in the existing browser runner and remove only their own temporary
 directories. Both suites are included in the workspace test scripts.
 
+Package CI runs the Node and browser suites separately from the workspace root
+with explicit file selectors and environments. Running unrestricted
+`npx vistta test` inside this package uses the Node runner and incorrectly
+includes the browser tests.
+
 ### Node API
 
 ```typescript
