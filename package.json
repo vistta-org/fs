@@ -3,6 +3,15 @@
   "version": "1.1.0",
   "description": "Vistta Filesystem Library",
   "main": "index.js",
+  "browser": "./browser.js",
+  "exports": {
+    ".": {
+      "browser": "./browser.js",
+      "default": "./index.js"
+    },
+    "./browser": "./browser.js",
+    "./*": "./*"
+  },
   "type": "module",
   "repository": {
     "type": "git",

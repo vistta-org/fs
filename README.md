@@ -26,6 +26,78 @@ console.log(fs.readFileSync("myfile.txt"));
 
 ## **API**
 
+### Browser support (OPFS)
+
+Browser-aware bundlers select the browser implementation when importing
+`@vistta/fs`. You can also explicitly import `@vistta/fs/browser`. Node imports
+continue to use the Node implementation.
+
+The browser implementation uses the Origin Private File System (OPFS), which
+requires a secure context (HTTPS or localhost) and
+`navigator.storage.getDirectory()`. It does not access arbitrary operating-system
+paths. Storage belongs to the current origin and is subject to browser quotas
+and eviction.
+
+```javascript
+import fs from "@vistta/fs";
+
+await fs.ensureDir("notes");
+await fs.writeFile("notes/hello.txt", "Hello");
+console.log(await fs.readFile("notes/hello.txt", "utf8"));
+```
+
+Supported browser operations:
+
+- Paths: `basename`, `dirname`, `extname`, `normalize`, `resolve`, `relative`,
+  `isAbsolute`, and `contains`. These use POSIX `/` separators; `resolve` uses
+  the OPFS root `/` instead of a process working directory. Inputs must be
+  strings, not OS paths, file URLs, or buffers.
+- Files: `readFile`, `writeFile`, `appendFile`, `copyFile`, `truncate`, and `unlink`.
+  Reads return `Uint8Array` by default, or strings with `utf8`/`utf-8` encoding.
+  Writes accept strings or `Uint8Array`. Read flags support `r`; write/append
+  flags support `w` and `a`. Exclusive writes and other encodings are unsupported.
+- Directories: `mkdir` (including `recursive`), `ensureDir`, and `readdir`.
+  As with the Node asynchronous wrapper, `readdir` returns names even with
+  `withFileTypes: true`.
+- Removal: `rm`/`remove` support `recursive` and `force`; `rmdir` without options
+  requires a directory, while passing options delegates to `rm`, as on Node.
+  Removing the OPFS root is always rejected.
+- Metadata: `access` with `F_OK` (the default), `exists`, `realpath`, and `stat`.
+  Browser `stat` provides `isFile()`, `isDirectory()`, and `isSymbolicLink()`;
+  files additionally expose `size`, `mtime`, and `mtimeMs`. OS metadata such as
+  ownership, permissions, and birth time is unavailable.
+- `formatSize`, and access constants `F_OK`, `R_OK`, `W_OK`, `X_OK`. Only `F_OK`
+  is accepted by browser `access`; other Node constants are not exposed.
+
+All other exported functions throw an error with code
+`ERR_FS_BROWSER_UNSUPPORTED` when called, including every synchronous filesystem
+operation, `isFile`, `isDirectory`, `fileId`, watchers, Node streams, file
+descriptors, links, ownership/permission changes, timestamp setters, globbing,
+temporary-file helpers, directory copying, and renaming/moving. Use
+`(await fs.stat(path)).isFile()` / `.isDirectory()` instead of the synchronous
+helpers. Unsupported options also throw rather than being silently ignored.
+
+Supported asynchronous operations reject their promises on failure. Native OPFS
+errors retain their `DOMException` names (such as `NotFoundError`,
+`TypeMismatchError`, or `QuotaExceededError`); `exists` returns `false` only for
+missing entries, not permission or capability failures. Accessing storage in an
+unsupported browser rejects with `ERR_FS_BROWSER_UNSUPPORTED`.
+
+### Tests
+
+From the workspace root, run:
+
+```sh
+npm run test:node -- --filter="Filesystem"
+npm run test:browser -- --filter="Filesystem"
+```
+
+Node tests use isolated OS temporary directories. Browser tests exercise real
+OPFS storage in the existing browser runner and remove only their own temporary
+directories. Both suites are included in the workspace test scripts.
+
+### Node API
+
 ```typescript
 /**
  * Checks if a file or directory exists.
