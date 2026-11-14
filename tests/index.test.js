@@ -1,11 +1,11 @@
+import packaged from "@vistta/fs";
 import assert from "node:assert/strict";
 import native from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import packaged from "@vistta/fs";
-import fs, * as named from "../index.js";
 import browser, * as browserNamed from "../browser.js";
+import fs, * as named from "../index.js";
 
 /** @param {(directory: string) => unknown | Promise<unknown>} callback */
 async function temporaryDirectory(callback) {
