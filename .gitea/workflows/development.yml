@@ -40,7 +40,7 @@ jobs:
       - name: Install Chromium and Browser Dependencies
         run: npx playwright install --with-deps chromium
 
-      - name: Node Unit Tests
+      - name: Unit Tests
         run: |
           npx vistta test "packages/${{ env.module }}/tests/index.test.js" --environment=node
           npx vistta test "packages/${{ env.module }}/tests/browser.test.js" --environment=browser
