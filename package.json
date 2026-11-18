@@ -15,7 +15,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://git.vistta.org/fs.git"
+    "url": "https://git.vistta.org/vistta/fs.git"
   },
   "scripts": {
     "postinstall": ""
